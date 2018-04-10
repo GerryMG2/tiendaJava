@@ -95,5 +95,17 @@ public class Proveedor {
         }
         return 0;
     }
+    
+    public Producto getProduct(String name)
+    {
+        for (Producto p: ListaProductos)
+        {
+            if(p.Nombre.equals(name))
+            {
+                return p;
+            }
+        }
+        return null;
+    }
 }
 

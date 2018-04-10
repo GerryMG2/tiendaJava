@@ -24,6 +24,8 @@ public class Factura {
     
     public void showFactura(){
         float total = 0;
+        System.out.println("#######################################################");
+        System.out.println( "Vendedor: "+this.NombreVendedor + " Cliente: " + this.NombreCliente + ":");
         for (Producto pro:Pro)
         {
             float costoparcial = pro.Costo * pro.Cantidad;

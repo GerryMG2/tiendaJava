@@ -32,7 +32,7 @@ public class Menu {
         {
             System.out.println("1.Lista De Productos 2.Lista de Proveedores 3.Hacer Pedido 4.Agregar Producto  ");
             System.out.println("5.Modificar Producto 6. Eliminar Producto 7. Agregar Proveedor 8. Eliminar Proveedor ");
-            System.out.println("8. Ver todos los productos de los proveedores 9.BuscarProveedor 10. Buscar Producto 11.Vender");
+            System.out.println("8. Ver todos los productos de los proveedores 9.BuscarProveedor 10. Buscar Producto 11.Vender 12. Mostrar facturas");
             System.out.println("Ingrese una opcion: ");
             Scanner input = new Scanner(System.in);
             opcion = input.nextInt();
@@ -58,11 +58,19 @@ public class Menu {
                         System.out.println("Ingrese la cantidad del producto: ");
                         int cantidad3 = input.nextInt();
                         
-                        if(tienda.existeProProvee(proveedor3, Producto3)){
+                        if(tienda.existeProProvee(proveedor3, Producto3) && tienda.getProveedor(proveedor3).getProduct(Producto3).getCantidad() >= cantidad3){
+                            tienda.getProveedor(proveedor3).getProduct(Producto3).Cantidad -= cantidad3;
                             Proveedor auxProv = tienda.getProveedor(proveedor3);
                             float costo = auxProv.getCost(Producto3);
                             Producto aux = new Producto(cantidad3,Producto3,costo);
-                            tienda.CargarProduct(aux);
+                            if(tienda.existeProducto(aux.Nombre))
+                            {
+                                tienda.CargarProduct(aux);
+                            }
+                            else
+                            {
+                                tienda.InsertProduct(aux);
+                            }
                             subPro.add(aux);
                         }
                         else
@@ -84,6 +92,7 @@ public class Menu {
                         Factura facAux = new Factura(subPro,tienda.NombreTienda,proveedor3);
                         System.out.println("La compra se hizo exitosamente");
                         facAux.showFactura();
+                        tienda.InsertFactura(facAux);
                     }
                     else{
                         System.out.println("No hay productos que comprar");
@@ -190,7 +199,7 @@ public class Menu {
                         int cantidad11 = input.nextInt();
                         
                         if(tienda.existeProducto(Producto11c)){
-                            float costo = cantidad11 * tienda.buscarProductsToSell(Producto11c).Costo;
+                            float costo = tienda.buscarProductsToSell(Producto11c).getCosto();
                             Producto aux = new Producto(cantidad11,Producto11c,costo);
                             tienda.DescargarProduct(aux);
                             subPro11.add(aux);
@@ -214,9 +223,12 @@ public class Menu {
                         Factura facAux = new Factura(subPro11,cliente11,tienda.NombreTienda);
                         System.out.println("La venta se hizo exitosamente");
                         facAux.showFactura();
+                        tienda.InsertFactura(facAux);
                     }
                     
                     break;
+                case 12:
+                    tienda.ShowFacturas();
             }
             
             System.out.println("Si desea cerrar el sistema digite 1, sino otro numero");

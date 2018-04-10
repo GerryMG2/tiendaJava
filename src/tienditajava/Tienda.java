@@ -51,6 +51,11 @@ public class Tienda {
         });
     }
     
+    public void InsertFactura(Factura fac)
+    {
+        this.ListFacturas.add(fac);
+    }
+    
     public void ShowTiendaProducts()
     {
         ListProducts.forEach(new Consumer<Producto>(){
@@ -78,7 +83,7 @@ public class Tienda {
     {
         for (Producto p: ListProducts)
         {
-            if(name == p.Nombre)
+            if(name.equals(p.Nombre))
             {
                 return p;
             }
@@ -245,6 +250,10 @@ public class Tienda {
         }
         return false;
     }
+    public String getNombre()
+    {
+        return this.NombreTienda;
+    }
     
     public Proveedor getProveedor(String name)
     {
@@ -256,5 +265,13 @@ public class Tienda {
             }
         }
         return null;
+    }
+    
+    public void ShowFacturas()
+    {
+        for(Factura f:ListFacturas)
+        {
+            f.showFactura();
+        }
     }
 }
